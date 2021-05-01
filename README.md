@@ -15,10 +15,10 @@ As Apex Triggers tem como características acionamentos descontextualizados o qu
 
 ## Implementações existentes
 Consegui encontrar boas soluções propostas para os mais diversos cenários, umas de implementação mais complexas e outras menos, porém vale sempre conhecer.
-https://github.com/kevinohara80/sfdc-trigger-framework
-https://github.com/apexfarm/ApexTriggerHandler
-https://github.com/benedwards44/Apex-Trigger-Handler
-https://developer.salesforce.com/forums/?id=906F000000093cKIAQ
+- https://github.com/kevinohara80/sfdc-trigger-framework
+- https://github.com/apexfarm/ApexTriggerHandler
+- https://github.com/benedwards44/Apex-Trigger-Handler
+- https://developer.salesforce.com/forums/?id=906F000000093cKIAQ
 
 ## Particularidade a implementação
 O objetivo dessa implementação é trazer uma forma simples e gradual de aprendizado da contextualização das execução das triggers
@@ -26,6 +26,7 @@ O objetivo dessa implementação é trazer uma forma simples e gradual de aprend
 ## Passo a passo
 
 **1°** Copie os códigos do Arquivo TriggerHandler e TriggerHandlerTest e cole dentro de Classes de mesmo nome na sua ORG.
+
 **2°** Cria uma classe, por exemplo para trigger de conta crie AccountTriggerHandler, estenda classe TriggerHandler, caso tenha dúvida utilize o código de exemplo AccountTriggerHandler.
 > public class AccountTriggerHandler extends TriggerHandler
 
@@ -97,39 +98,62 @@ A forma mais simples de acessas os objetos da trigger é acessá-los diretamente
 **Usar os métodos com parâmetros**: quando você utiliza os métodos que recebem esses valores parâmetro os mesmos já estão tratados e em caso de execução por Record Type eles também já estão filtrados.
 
 **Trigger.new** :
+
 Substitua usar isso:
+
 ```List<Account> listNew = (List<Account>) Trigger.new;```
+
 por isso:
+
 ```List<Account> listNew = (List<Account>) this.getTriggerNew();```
 
 **Trigger.old** :
+
 Substitua usar isso:
+
 ```List<Account> listOld = (List<Account>) Trigger.old;```
+
 por isso:
+
 ```List<Account> listOld = (List<Account>) this.getTriggerOld();```
 
+
 **Trigger.newMap** :
+
 Substitua usar isso:
+
 ```List<Account> mapNew= (List<Account>) Trigger.newMap;```
+
 por isso:
+
 ```List<Account> mapNew= (List<Account>) this.getTriggerMapNew();```
+
   
 **Trigger.oldMap** :
+
 Substitua usar isso:
+
 ```List<Account> mapOld = (List<Account>) Trigger.oldMap;```
+
 por isso:
+
 ```List<Account> mapOld = (List<Account>) this.getTriggerMapOld();```
+
   
 **Você também pode resgatar os Objetos filtrando por Record Type** :
 
 Trigger.new tratado, encapsulado e filtrado:
+
 ```List<Account> listNewExRecordType = (List<Account>) this.getTriggerNewByRecordTypeDeveloperName('ExRecordType');```
 
 Trigger.old tratado, encapsulado e filtrado:
+
 ```List<Account> listOldExRecordType = (List<Account>) this.getTriggerOldByRecordTypeDeveloperName('ExRecordType'); ```
 
 Trigger.newMap tratado, encapsulado e filtrado:
+
 ```Map<Id, Account> mapNewExRecordType = (Map<Id, Account>) this.getTriggerNewMapByRecordTypeDeveloperName('ExRecordType');```
 
 Trigger.oldMap tratado, encapsulado e filtrado:
+
 ```Map<Id, Account> mapOldExRecordType = (Map<Id, Account>) this.getTriggerOldMapByRecordTypeDeveloperName('ExRecordType');```
