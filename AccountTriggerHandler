@@ -1,0 +1,41 @@
+public class AccountTriggerHandler extends TriggerHandler {
+    
+    protected override void beforeInsert() {
+
+    }
+    
+    protected override void beforeUpdate() {
+
+    }
+    
+    protected override void beforeDelete() {
+
+    }
+    
+    protected override void afterInsert() {
+
+    } 
+    
+    protected override void afterUpdate() {
+
+    }
+    
+    protected override void afterDelete() {
+
+    }
+    
+    protected override void afterUndelete() {
+
+    }
+    
+    private void getObjects() {
+        List<Account> listNew = (List<Account>) this.getTriggerNew();
+        List<Account> listOld = (List<Account>) this.getTriggerOld();
+        List<Account> listNewPf = (List<Account>) this.getTriggerNewByRecordTypeDeveloperName('PF');
+        List<Account> listOldPf = (List<Account>) this.getTriggerOldByRecordTypeDeveloperName('PF'); 
+        Map<Id, Account> mapNew = (Map<Id, Account>) this.getTriggerMapNew();
+        Map<Id, Account> mapOld = (Map<Id, Account>) this.getTriggerMapOld();
+        Map<Id, Account> mapNewPF = (Map<Id, Account>) this.getTriggerNewMapByRecordTypeDeveloperName('PF');
+        Map<Id, Account> mapOldPF = (Map<Id, Account>) this.getTriggerOldMapByRecordTypeDeveloperName('PF');    
+    }
+}
