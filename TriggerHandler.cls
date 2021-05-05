@@ -7,6 +7,11 @@ public abstract class TriggerHandler {
     }
     
     public void run() {
+        if(isDisable()) {
+            debugTriggerDisable();
+            return;
+        }
+        
         switch on operationType {
             when BEFORE_INSERT {
                 this.beforeInsert(getTriggerNew());
@@ -40,6 +45,11 @@ public abstract class TriggerHandler {
     }
     
     public void runByRecordtype(String recordTypeDeveloperName) {
+        if(isDisable()) {
+            debugTriggerDisable();
+            return;
+        }
+        
         switch on operationType {
             when BEFORE_INSERT {
                 this.beforeInsert(getTriggerNewByRecordTypeDeveloperName(recordTypeDeveloperName));
@@ -173,13 +183,14 @@ public abstract class TriggerHandler {
     }
     
     private Id getRecordTypeIdByDeveloperName(String recordTypeDeveloperName) {
-        if(System.Test.isRunningTest()) {
+        SObject varSobject = getSObject();
+        Boolean isSObjectContainsRT = varSobject.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().containsKey(recordTypeDeveloperName);
+        
+        if(System.Test.isRunningTest() && !isSObjectContainsRT) {
             return null;
         }
         
-        SObject varSobject = getSObject();
-        
-        if(!varSobject.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().containsKey(recordTypeDeveloperName)) {
+        if(!isSObjectContainsRT) {
             throw new TriggerHandlerException('record type [' +recordTypeDeveloperName+ '] not found on sobject [' + varSobject.getSObjectType().getDescribe().getName() + ']');
         }
         
@@ -232,6 +243,21 @@ public abstract class TriggerHandler {
         }
         mapSObject.clear();
         return mapSObject;
+    }
+    
+    private Boolean isDisable() {
+        return FeatureManagement.checkPermission(getCurrentClassName() + 'Disable');
+    }
+    
+    private String getCurrentClassName() {
+        return String.valueOf(this).substring(0,String.valueOf(this).indexOf(':'));
+    }
+    
+    private void debugTriggerDisable() {
+        String currentClassName = getCurrentClassName();
+        String customPermissionName = currentClassName + 'Disable';
+        String userName = System.UserInfo.getUserName();
+        System.debug(system.LoggingLevel.INFO, 'The '+currentClassName+' Trigger is disabled for the '+userName+' user because he has the '+customPermissionName+' custom permission');
     }
     
     public class TriggerHandlerException extends Exception { }
