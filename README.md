@@ -159,4 +159,4 @@ Trigger.oldMap tratado, encapsulado e filtrado:
 ```Map<Id, Account> mapOldExRecordType = (Map<Id, Account>) this.getTriggerOldMapByRecordTypeDeveloperName('ExRecordType');```
 
 ## Desabilitar Trigger Handler
-Nessa nova versão você pode desabilitar uma trigger handler com granularidade de usuário de forma bem simples, apenas adicionando uma Custom Permition para o(s) com o nome da triiger handler concatenado com Disable, no exemplo da AccountTriggerHandler teriamos AccountTriggerHandlerDisable, essa adição pode ser feita por perfil ou Permission Set  
+Nessa nova versão você pode desabilitar uma trigger handler com granularidade de usuário de forma bem simples, apenas adicionando uma Custom Permition para o(s) usuário(s) com o nome da triiger handler concatenado com Disable, no exemplo da AccountTriggerHandler teriamos AccountTriggerHandlerDisable, essa adição pode ser feita por perfil ou Permission Set  
