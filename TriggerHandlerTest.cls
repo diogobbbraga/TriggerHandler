@@ -1,3 +1,4 @@
+/* @author Diogo Braga */
 @isTest
 public with sharing class TriggerHandlerTest {
     @isTest
