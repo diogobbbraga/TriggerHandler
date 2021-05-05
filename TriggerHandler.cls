@@ -183,14 +183,13 @@ public abstract class TriggerHandler {
     }
     
     private Id getRecordTypeIdByDeveloperName(String recordTypeDeveloperName) {
-        SObject varSobject = getSObject();
-        Boolean isSObjectContainsRT = varSobject.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().containsKey(recordTypeDeveloperName);
-        
-        if(System.Test.isRunningTest() && !isSObjectContainsRT) {
+        if(Trigger.new == null && Trigger.old == null) {
             return null;
         }
         
-        if(!isSObjectContainsRT) {
+        SObject varSobject = getSObject();
+        
+        if(!varSobject.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().containsKey(recordTypeDeveloperName)) {
             throw new TriggerHandlerException('record type [' +recordTypeDeveloperName+ '] not found on sobject [' + varSobject.getSObjectType().getDescribe().getName() + ']');
         }
         
