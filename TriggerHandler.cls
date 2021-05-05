@@ -1,3 +1,8 @@
+/*
+* @author Diogo Braga
+* @date 01/05/2021
+* @description facilitator for implementing the Trigger Handler design pattern
+*/
 public abstract class TriggerHandler {
     @TestVisible
     private System.TriggerOperation operationType;
